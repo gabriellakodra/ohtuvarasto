@@ -9,7 +9,7 @@ def create_and_display_initial_varastot():
     print("Luonnin jälkeen:")
     print(f"Mehuvarasto: {mehua}")
     print(f"Olutvarasto: {olutta}")
-    
+
     return mehua, olutta
 
 
@@ -57,14 +57,17 @@ def demonstrate_overflow_cases(olutta, mehua):
     print(f"Mehuvarasto: {mehua}")
 
 
-def demonstrate_withdrawal_cases(olutta, mehua):
-    """Demonstrate withdrawal cases from varasto."""
+def demonstrate_olut_withdrawal(olutta):
+    """Demonstrate withdrawal from olut varasto."""
     print(f"Olutvarasto: {olutta}")
     print("olutta.ota_varastosta(1000.0)")
     saatiin = olutta.ota_varastosta(1000.0)
     print(f"saatiin {saatiin}")
     print(f"Olutvarasto: {olutta}")
 
+
+def demonstrate_mehu_withdrawal(mehua):
+    """Demonstrate withdrawal from mehu varasto."""
     print(f"Mehuvarasto: {mehua}")
     print("mehua.otaVarastosta(-32.9)")
     saatiin = mehua.ota_varastosta(-32.9)
@@ -79,7 +82,8 @@ def main():
     demonstrate_setters(mehua)
     demonstrate_error_cases()
     demonstrate_overflow_cases(olutta, mehua)
-    demonstrate_withdrawal_cases(olutta, mehua)
+    demonstrate_olut_withdrawal(olutta)
+    demonstrate_mehu_withdrawal(mehua)
 
 
 if __name__ == "__main__":
