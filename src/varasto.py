@@ -7,21 +7,19 @@ class Varasto:
         """Validoi ja palauta tilavuus, nollaa jos virheellinen."""
         if tilavuus > 0.0:
             return tilavuus
-        else:
-            # virheellinen, nollataan
-            return 0.0
+        # virheellinen, nollataan
+        return 0.0
 
     def _validoi_alku_saldo(self, alku_saldo, tilavuus):
         """Validoi ja palauta alku_saldo, korjaa jos virheellinen."""
         if alku_saldo < 0.0:
             # virheellinen, nollataan
             return 0.0
-        elif alku_saldo <= tilavuus:
+        if alku_saldo <= tilavuus:
             # mahtuu
             return alku_saldo
-        else:
-            # täyteen ja ylimäärä hukkaan!
-            return tilavuus
+        # täyteen ja ylimäärä hukkaan!
+        return tilavuus
 
     # huom: ominaisuus voidaan myös laskea. Ei tarvita erillistä kenttää.
     def paljonko_mahtuu(self):
