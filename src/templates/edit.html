@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Muokkaa {{ data.nimi }}{% endblock %}
+
+{% block content %}
+<h1>Muokkaa varastoa</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="nimi">Varaston nimi:</label>
+        <input type="text" id="nimi" name="nimi" value="{{ data.nimi }}" required>
+    </div>
+
+    <button type="submit" class="btn btn-success">Tallenna</button>
+    <a href="{{ url_for('view_varasto', varasto_id=varasto_id) }}" class="btn btn-warning">Peruuta</a>
+</form>
+{% endblock %}

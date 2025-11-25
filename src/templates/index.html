@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Varastot - Etusivu{% endblock %}
+
+{% block content %}
+<h1>Varastosovellus</h1>
+
+{% if varastot %}
+<table>
+    <thead>
+        <tr>
+            <th>Nimi</th>
+            <th>Saldo</th>
+            <th>Tilavuus</th>
+            <th>Täyttöaste</th>
+            <th>Toiminnot</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for id, data in varastot.items() %}
+        <tr>
+            <td>{{ data.nimi }}</td>
+            <td>{{ data.varasto.saldo }}</td>
+            <td>{{ data.varasto.tilavuus }}</td>
+            <td>
+                <div class="progress-bar">
+                    {% set fill_percent = (data.varasto.saldo / data.varasto.tilavuus * 100) if data.varasto.tilavuus > 0 else 0 %}
+                    <div class="progress-fill" style="width: {{ fill_percent }}%"></div>
+                </div>
+            </td>
+            <td>
+                <a href="{{ url_for('view_varasto', varasto_id=id) }}" class="btn btn-primary">Näytä</a>
+                <form action="{{ url_for('delete_varasto', varasto_id=id) }}" method="post" style="display: inline;">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Haluatko varmasti poistaa tämän varaston?')">Poista</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="info-box">
+    <p>Ei varastoja. <a href="{{ url_for('create_varasto') }}">Luo uusi varasto</a> aloittaaksesi.</p>
+</div>
+{% endif %}
+
+<a href="{{ url_for('create_varasto') }}" class="btn btn-success">+ Luo uusi varasto</a>
+{% endblock %}
