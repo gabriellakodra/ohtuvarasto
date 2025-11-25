@@ -22,12 +22,14 @@ def index():
 def create_varasto():
     if request.method == 'POST':
         nimi = request.form.get('nimi', 'Varasto')
+        kuvaus = request.form.get('kuvaus', '')
         tilavuus = float(request.form.get('tilavuus', 10))
         alku_saldo = float(request.form.get('alku_saldo', 0))
 
         varasto_id = get_next_id()
         varastot[varasto_id] = {
             'nimi': nimi,
+            'kuvaus': kuvaus,
             'varasto': Varasto(tilavuus, alku_saldo)
         }
         return redirect(url_for('index'))
@@ -53,7 +55,10 @@ def edit_varasto(varasto_id):
 
     if request.method == 'POST':
         nimi = request.form.get('nimi', varastot[varasto_id]['nimi'])
+        default_kuvaus = varastot[varasto_id].get('kuvaus', '')
+        kuvaus = request.form.get('kuvaus', default_kuvaus)
         varastot[varasto_id]['nimi'] = nimi
+        varastot[varasto_id]['kuvaus'] = kuvaus
         return redirect(url_for('view_varasto', varasto_id=varasto_id))
 
     return render_template(

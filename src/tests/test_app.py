@@ -26,12 +26,14 @@ class TestFlaskApp(unittest.TestCase):
     def test_create_varasto_post(self):
         response = self.client.post('/create', data={
             'nimi': 'Testivarasto',
+            'kuvaus': 'Testikuvaus',
             'tilavuus': '100',
             'alku_saldo': '10'
         }, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(varastot), 1)
         self.assertEqual(varastot[1]['nimi'], 'Testivarasto')
+        self.assertEqual(varastot[1]['kuvaus'], 'Testikuvaus')
         self.assertEqual(varastot[1]['varasto'].tilavuus, 100)
         self.assertEqual(varastot[1]['varasto'].saldo, 10)
 
@@ -62,14 +64,17 @@ class TestFlaskApp(unittest.TestCase):
     def test_edit_varasto_post(self):
         self.client.post('/create', data={
             'nimi': 'Testivarasto',
+            'kuvaus': '',
             'tilavuus': '100',
             'alku_saldo': '10'
         })
         response = self.client.post('/varasto/1/edit', data={
-            'nimi': 'Uusi nimi'
+            'nimi': 'Uusi nimi',
+            'kuvaus': 'Uusi kuvaus'
         }, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(varastot[1]['nimi'], 'Uusi nimi')
+        self.assertEqual(varastot[1]['kuvaus'], 'Uusi kuvaus')
 
     def test_add_to_varasto(self):
         self.client.post('/create', data={
